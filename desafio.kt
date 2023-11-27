@@ -1,4 +1,3 @@
-// Versão inicial da resolução do desafio proposto //
 data class Usuario(var nome: String,var idade: Int,val email: String,val cpf: String)
 
 enum class Nivel {BASICO, INTERMEDIARIO, AVANCADO}
@@ -33,14 +32,26 @@ data class Formacoes (val nome: String,
         }
     }
     
-    fun matricular (usuario: Usuario) {
-        if(inscritos.contains(usuario)) {
-            println("Usuário já inscrito")
-        } else {
-            inscritos.add(usuario)
-            println("${usuario.nome} matriculado com sucesso")
+    fun matricular (vararg usuarios: Usuario) {
+        for (usuario in usuarios) {
+            if(inscritos.contains(usuario)) {
+                println("Usuário já inscrito")
+            } else {
+                inscritos.add(usuario)
+                println("${usuario.nome} matriculado com sucesso")
+            }
         }
-        
+    }
+    
+    fun matricular (usuarios: MutableList<Usuario>) {
+        for (usuario in usuarios) {
+            if(inscritos.contains(usuario)) {
+                println("Usuário já inscrito")
+            } else {
+                inscritos.add(usuario)
+                println("${usuario.nome} matriculado com sucesso")
+            }
+        }
     }
 }
 
@@ -56,10 +67,16 @@ fun main() {
     val usuario1: Usuario = Usuario("Fabio", 29, "fabio@endereco.com", "XXX.XXX.XXX-XX")
     val usuario2: Usuario = Usuario("Aisha", 23, "aisha@endereco.com", "YYY.YYY.YYY-YY")
     val usuario3: Usuario = Usuario("Mauricio", 18, "mauricio@endereco.com", "ZZZ.ZZZ.ZZZ-ZZ")
+    val usuario4: Usuario = Usuario("Rebeca", 19, "rebeca@endereco.com", "WWW.WWW.WWW-WW")
+    
+    val listaUsuarios: MutableList<Usuario> = mutableListOf(usuario1, usuario2, usuario3) 
+    val listaUsuarios2: List<Usuario> = listOf(usuario3, usuario4) 
     
     backKotlin.matricular(usuario1)
-    backKotlin.matricular(usuario2)
-    backKotlin.matricular(usuario3)
+    backKotlin.matricular(usuario1, usuario2)
+    
+    backKotlin.matricular(listaUsuarios)
+    backKotlin.matricular(*listaUsuarios2.toTypedArray())
     
     println(backKotlin)
 }
